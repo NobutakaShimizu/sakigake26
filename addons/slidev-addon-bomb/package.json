@@ -1,0 +1,7 @@
+{
+  "name": "slidev-addon-bomb",
+  "version": "0.1.0",
+  "private": true,
+  "keywords": ["slidev-addon", "slidev"],
+  "description": "Slidev addon: bomb heats up as presentation time elapses"
+}
