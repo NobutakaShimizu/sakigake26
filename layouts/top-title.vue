@@ -1,6 +1,7 @@
 <script setup lang="js">
 import { computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
+import { slides } from '#slidev/slides'
 
 const props = defineProps({
   color: {
@@ -11,9 +12,22 @@ const props = defineProps({
   },
 })
 
-const { $page, $nav } = useSlideContext()
+const { $page, $frontmatter } = useSlideContext()
 
-const pageLabel = computed(() => `${$page.value}/${$nav.value.total}`)
+/** 付録 (appendix: true) より前のスライド数を合計とする */
+const mainTotal = computed(() => {
+  const list = slides.value
+  const idx = list.findIndex(s => s.meta?.slide?.frontmatter?.appendix)
+  return idx === -1 ? list.length : idx
+})
+
+const isAppendix = computed(() => !!$frontmatter.appendix)
+
+const pageLabel = computed(() => {
+  if (isAppendix.value)
+    return ''
+  return `${$page.value}/${mainTotal.value}`
+})
 
 const alignment = computed(() => {
   switch (props.align) {
@@ -39,12 +53,12 @@ const colorscheme = computed(() => {
         <div class="slidev-layout toptitle title p-0 pt-0 mt-auto mb-auto flex-1 min-w-0" :class="alignment">
           <slot name="title" />
         </div>
-        <div class="toptitle-page" aria-label="ページ番号">
+        <div v-if="pageLabel" class="toptitle-page" aria-label="ページ番号">
           {{ pageLabel }}
         </div>
       </div>
     </div>
-    <div class="slidev-layout toptitle content h-fit w-full">
+    <div class="slidev-layout toptitle content flex-1 min-h-0 w-full">
       <slot name="content" />
     </div>
     <div v-if="$slots.default" class="slidev-layout default h-fit w-full">

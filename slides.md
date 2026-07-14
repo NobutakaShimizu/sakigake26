@@ -298,17 +298,11 @@ color: amber-light
 
 ::title::
 
-# 三つの部分課題
+# 年次計画
 
 ::content::
 
-- 三つの課題を相互作用させつつ進める
-
-1. 乱択線形代数におけるランダム性の計算量的定式化
-2. Hutchinson 型トレース推定における擬似ランダム性の導入
-3. 乱択線形代数における擬似ランダム性の理論基盤化
-
-
+<YearlyPlan />
 
 ---
 layout: top-title
@@ -317,12 +311,11 @@ color: amber-light
 
 ::title::
 
-# 独創性・新規制
+# 将来展望
 
 ::content::
 
-- 「予測(計算)できない」に基づいて、「効率的に予測する」
-
+<FutureOutlook />
 
 ---
 layout: top-title
@@ -331,129 +324,26 @@ color: amber-light
 
 ::title::
 
-# 達成目標
+# まとめ
 
 ::content::
 
-## Hutchinson 型トレース推定を試金石に
 
-<div class="text-center text-2xl mt-4">
 
-$\displaystyle \widehat{\tau}(A)=\frac1m\sum_{j=1}^{m} z_j^{\mathsf T}Az_j$
+---
+layout: section
+color: amber-light
+appendix: true
+---
 
-</div>
+# 付録
 
-<div class="grid grid-cols-2 gap-8 mt-6">
 
-<div class="topic-box" data-callout-title="従来">
-
-- 独立なランダムベクトル $z_j$
-- 多数の行列ベクトル積
-- 乱数・保存・生成コスト
-
-</div>
-
-<div class="topic-box" data-callout-title="本研究">
-
-- 短い seed から probe 群を生成
-- 推定精度と反復利用の安定性を保証
-- 生成・保存・一括適用を効率化
-
-</div>
-
-</div>
 
 ---
 layout: top-title
 color: amber-light
----
-
-::title::
-
-# 研究の進め方
-
-::content::
-
-<div class="grid grid-cols-3 gap-5 mt-4">
-
-<div class="topic-box" data-callout-title="課題 1">
-
-### 計算量的定式化
-
-- 識別器クラスの定義
-- 真の乱数からの転移原理
-- 必要なランダム性の特徴づけ
-
-</div>
-
-<div class="topic-box" data-callout-title="課題 2">
-
-### Hutchinson 推定
-
-- 擬似ランダム probe の設計
-- 精度・安定性の解析
-- 時間・乱数・記憶量の評価
-
-</div>
-
-<div class="topic-box" data-callout-title="課題 3">
-
-### 一般理論化
-
-- 二次形式から一般のスケッチへ
-- 複数構成の比較
-- 適用可能性と限界の整理
-
-</div>
-
-</div>
-
-<div class="mt-8 text-center text-lg" v-click>
-
-1年目：定式化　→　2年目：具体的構成　→　3年目以降：一般化・展開
-
-</div>
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 独創性・新規性
-
-::content::
-
-<div class="grid grid-cols-2 gap-8 mt-4">
-
-<div class="topic-box" data-callout-title="既存研究">
-
-- 幾何学的・確率論的性質を直接解析
-- タスクごとに専用のランダム構造
-- 構成ごとに個別の正当性証明
-
-</div>
-
-<div class="definition" data-callout-title="本研究">
-
-- 識別困難性を共通の設計基準に
-- 失敗から識別器を作る逆向きの原理
-- 精度保証と計算資源削減を統一的に扱う
-
-</div>
-
-</div>
-
-<div class="mt-10 text-center text-2xl font-bold" v-click>
-
-理論計算機科学 × 乱択線形代数 × 数値線形代数
-
-</div>
-
----
-layout: top-title
-color: amber-light
+appendix: true
 ---
 
 ::title::
@@ -491,100 +381,3 @@ color: amber-light
 
 </div>
 
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 申請者の強み
-
-::content::
-
-<div class="grid grid-cols-3 gap-5 mt-6 text-center">
-
-<div class="definition" v-click>
-
-## ランダム自己帰着
-
-ランダム入力と最悪入力を接続
-
-</div>
-
-<div class="definition" v-click>
-
-## 行列計算の誤り訂正
-
-不完全な線形情報から正解を復元
-
-</div>
-
-<div class="definition" v-click>
-
-## 困難性増幅
-
-小さな予測可能性を識別器へ変換
-
-</div>
-
-</div>
-
-<div class="mt-10 text-center text-xl font-bold" v-click>
-
-本研究の「失敗から識別器を構成する」技術基盤を既に保有
-
-</div>
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 将来展望
-
-::content::
-
-<div class="mt-6 text-center text-xl">
-
-Hutchinson 型トレース推定
-
-<div class="my-4 text-3xl">$\Downarrow$</div>
-
-スペクトル推定・対数行列式・低ランク近似
-
-<div class="my-4 text-3xl">$\Downarrow$</div>
-
-ランダム射影・ベクトル量子化・近似最近傍探索
-
-</div>
-
-<div class="mt-10 claim text-center text-xl font-bold" v-click>
-
-ランダム性を，無制限に使う資源から，
-<br>
-精度・時間・記憶とともに設計する数理対象へ
-
-</div>
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# まとめ
-
-::content::
-
-<div class="mt-8 text-2xl">
-
-- 乱択線形代数に必要なランダム性を計算量的に特徴づける
-- Hutchinson 推定を起点に，擬似ランダム構造を設計する
-- 精度を保ちながら，時間・乱数・記憶の削減を目指す
-- 個別構成を越えた一般的なランダム性設計原理へ
-
-</div>

@@ -37,7 +37,7 @@ const colorscheme = computed(() => {
 
 .slidev-layout.cover p {
   letter-spacing: 0.05em;
-  font-size: 0.85em;
+  font-size: 1.25em;
   line-height: 1.4em;
 }
 
