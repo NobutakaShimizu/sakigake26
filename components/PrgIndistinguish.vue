@@ -54,7 +54,10 @@ const { $clicks } = useSlideContext()
 
 const trueReveal = ref(0)
 const prReveal = ref(0)
+const showArrowIn = ref(false)
+const showAlgo = ref(false)
 const algoPulse = ref(false)
+const showArrowOut = ref(false)
 const outReveal = ref(0)
 const showPerson = ref(false)
 const indistinct = ref(false)
@@ -78,7 +81,10 @@ function resetAll() {
   personStarted = false
   trueReveal.value = 0
   prReveal.value = 0
+  showArrowIn.value = false
+  showAlgo.value = false
   algoPulse.value = false
+  showArrowOut.value = false
   outReveal.value = 0
   showPerson.value = false
   indistinct.value = false
@@ -88,13 +94,17 @@ async function runPipelineOnce() {
   const t = ++token
   trueReveal.value = 0
   prReveal.value = 0
+  showArrowIn.value = false
+  showAlgo.value = false
   algoPulse.value = false
+  showArrowOut.value = false
   outReveal.value = 0
 
   await delay(250, t)
   if (t !== token)
     return
 
+  // 1. R / R̃
   const n = ROWS * COLS
   while (trueReveal.value < n || prReveal.value < n) {
     if (t !== token)
@@ -107,11 +117,30 @@ async function runPipelineOnce() {
   await delay(AFTER_R_MS, t)
   if (t !== token)
     return
+
+  // 2. 矢印 →
+  showArrowIn.value = true
+  await delay(380, t)
+  if (t !== token)
+    return
+
+  // 3. A
+  showAlgo.value = true
+  await delay(280, t)
+  if (t !== token)
+    return
   algoPulse.value = true
   await delay(ALGO_PULSE_MS, t)
   if (t !== token)
     return
 
+  // 4. 矢印 →
+  showArrowOut.value = true
+  await delay(380, t)
+  if (t !== token)
+    return
+
+  // 5. y / ỹ
   while (outReveal.value < OUT) {
     if (t !== token)
       return
@@ -190,7 +219,7 @@ onUnmounted(() => {
         <div class="prg-pipelines">
           <!-- 真のランダム行 -->
           <div class="prg-row">
-            <div class="prg-col">
+            <div class="prg-col" :class="{ 'is-stage-on': trueReveal > 0 }">
               <div class="prg-matrix-wrap prg-matrix-wrap--true">
                 <div
                   class="prg-matrix"
@@ -211,16 +240,19 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="prg-arrow" :class="{ 'is-on': algoPulse }">→</div>
+            <div class="prg-arrow" :class="{ 'is-on': showArrowIn }">→</div>
 
-            <div class="prg-algo" :class="{ 'is-pulse': algoPulse }">
+            <div
+              class="prg-algo"
+              :class="{ 'is-on': showAlgo, 'is-pulse': algoPulse }"
+            >
               <span class="prg-algo-name">A</span>
               <span class="prg-algo-sub">乱択線形代数</span>
             </div>
 
-            <div class="prg-arrow" :class="{ 'is-on': outReveal > 0 }">→</div>
+            <div class="prg-arrow" :class="{ 'is-on': showArrowOut }">→</div>
 
-            <div class="prg-col prg-col--out">
+            <div class="prg-col prg-col--out" :class="{ 'is-stage-on': outReveal > 0 }">
               <div
                 class="prg-vector"
                 :class="{ 'is-boxed': outReveal >= OUT }"
@@ -242,7 +274,7 @@ onUnmounted(() => {
 
           <!-- 疑似ランダム行 -->
           <div class="prg-row">
-            <div class="prg-col">
+            <div class="prg-col" :class="{ 'is-stage-on': prReveal > 0 }">
               <div class="prg-matrix-wrap prg-matrix-wrap--pr">
                 <div
                   class="prg-matrix"
@@ -263,16 +295,19 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="prg-arrow" :class="{ 'is-on': algoPulse }">→</div>
+            <div class="prg-arrow" :class="{ 'is-on': showArrowIn }">→</div>
 
-            <div class="prg-algo" :class="{ 'is-pulse': algoPulse }">
+            <div
+              class="prg-algo"
+              :class="{ 'is-on': showAlgo, 'is-pulse': algoPulse }"
+            >
               <span class="prg-algo-name">A</span>
               <span class="prg-algo-sub">乱択線形代数</span>
             </div>
 
-            <div class="prg-arrow" :class="{ 'is-on': outReveal > 0 }">→</div>
+            <div class="prg-arrow" :class="{ 'is-on': showArrowOut }">→</div>
 
-            <div class="prg-col prg-col--out">
+            <div class="prg-col prg-col--out" :class="{ 'is-stage-on': outReveal > 0 }">
               <div
                 class="prg-vector prg-vector--pr"
                 :class="{ 'is-boxed': outReveal >= OUT }"
@@ -387,7 +422,7 @@ onUnmounted(() => {
             <div class="prg-bubble" :class="{ 'is-on': indistinct }">
               <span class="prg-bubble-text">
                 <Math tex="y" /> と <Math tex="\widetilde{y}" /> …
-                <br>区別できない！
+                <br>識別できない！
               </span>
             </div>
           </div>
@@ -445,6 +480,14 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.prg-col.is-stage-on {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .prg-col--out {
@@ -522,15 +565,16 @@ onUnmounted(() => {
 
 .prg-arrow {
   font-size: 1.1rem;
-  color: #90a4ae;
-  opacity: 0.35;
-  transition: opacity 0.25s ease, color 0.25s ease;
+  color: #546e7a;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.3s ease, color 0.25s ease, transform 0.3s ease;
   margin-bottom: 1.1rem;
 }
 
 .prg-arrow.is-on {
   opacity: 1;
-  color: #546e7a;
+  transform: scale(1);
 }
 
 .prg-algo {
@@ -545,7 +589,19 @@ onUnmounted(() => {
   border: 2px solid #78909c;
   background: #eceff1;
   margin-bottom: 1.1rem;
-  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  opacity: 0;
+  transform: translateX(-6px) scale(0.94);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.prg-algo.is-on {
+  opacity: 1;
+  transform: translateX(0) scale(1);
 }
 
 .prg-algo.is-pulse {

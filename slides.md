@@ -164,45 +164,11 @@ color: amber-light
 
 <v-click>
 
-- 例えば $D$ として内積を計算するアルゴリズムにすれば, ランダムスケッチを模倣できる
-- ランダムスケッチ以外にも汎用的に適用できる
+- 例: $D$ として圧縮前後の内積を比較するアルゴリズム
+  - 区別できないならば, ランダムスケッチを模倣
+- ランダムスケッチ以外にも**汎用的に**適用できる
 
 </v-click>
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 基本原理
-
-::content::
-
-- 効率的なアルゴリズムの限界についての議論 -> **計算量下界の仮定が必要**
-
-計算量的仮定 (例えば次世代の暗号の安全性の仮定) -> 疑似ランダム行列/ベクトルを構成 -> 乱択線形代数アルゴリズムに適用
-
-win-winの議論: 疑似ランダム性を使うアルゴリズムが上手く行かない $\Rightarrow$ 元々の計算量的仮定が偽だったことになり, 大きなブレイクスルー (例えば暗号が安全でないことの証明) になる
-
-- 具体的な計算量下界の例:
-  - Learning with Error (LWE), Ring-LWE: ほとんどの耐量子暗号が依存
-  - Goldreich PRG: 並列計算できる暗号技術の理論基盤
-  - 埋め込みクリーク問題: 高次元統計学における計算量と情報理論の乖離の理論の中核
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 独創性・新規制
-
-::content::
-
-- 「予測(計算)できない」に基づいて、「効率的に予測する」
 
 ---
 layout: top-title
@@ -218,19 +184,57 @@ color: amber-light
 
 <div class="goal">
 
-- 真のランダム性の代わりに**計算量的疑似ランダム性**を用いて乱択線形代数の汎用的な理論を構築
-- 疑似ランダム性の持つ構造的性質を利用して, 乱択線形代数アルゴリズムの効率の改善
+計算量的擬似ランダム性に基づき, トレース推定を起点とする乱択線形代数の新たな数理基盤を構築する.
+
+
+<div class="footnote">
+
+トレース推定: 乱択線形代数の基本タスク. 勾配法やクラスタ係数など最適化やネットワーク解析への応用される.
+
+</div>
+
+</div>
+
+期待できるインパクト
+
+<v-clicks>
+
+- **情報理論の壁を超えた**効率性
+  - 例えば, $x\mapsto \widetilde{R}x$ を, 疑似ランダム性の構造を用いて $\widetilde{R}$ の**成分数より少ない手間**で計算できる
+  - 一般に真のランダム行列では不可能
+- 高い**汎用性**: 既存の改善手法と異なり, アドホックな修正や証明が不要
+  - トレース推定, 低ランク近似, スペクトル推定, 乱択反復法, 線型方程式ソルバー, ...
+- **win-winの議論**によるブレイクスルー (後述)
+
+</v-clicks>
+
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 基本原理と Win–Win
+
+::content::
+
+
+- 効率的アルゴリズムの限界性は長年の未解決問題 → 現状では, **計算量下界の仮定** が必要
+
+<AssumptionPipeline />
+
+<div class="question" v-click>
+
+計算量下界の強い仮定をおいて大丈夫なのか？
 
 </div>
 
 <v-click>
 
-- メリット
-  - **超**情報理論的な効率性
-    - 例えば, $x\mapsto Rx$ を, $R$の**成分数より少ない手間**で計算できる
-    - 計算量的仮定に依拠
-  - 高い**汎用性**: 既存の改善手法と異なり, アドホックな修正や証明が不要
-    - トレース推定, 低ランク近似, スペクトル推定, 乱択反復法, 線型方程式ソルバー, ...
+- Win–Win: 仮定が成り立つにしても成り立たないにしても、科学は前にすすむ
+
+<WinWinFork :click-at="3" />
 
 </v-click>
 
@@ -242,84 +246,48 @@ color: amber-light
 
 ::title::
 
-# 独創性・新規性
+# 研究方法
 
 ::content::
 
+- 特定の仮定に固執しないが, 以下の重要な計算量下界の仮定を扱う:
 
----
-layout: top-title
-color: amber-light
----
+<div class="hardness-grid">
 
-::title::
-
-# 基本原理
-
-::content::
-
-<div class="mt-4 text-center text-xl">
-
-擬似ランダム構造を使うと精度が悪化する
-
-<div class="my-4 text-3xl">$\Downarrow$</div>
-
-その差を利用して，真の乱数と擬似乱数を区別できる
-
-<div class="my-4 text-3xl">$\Downarrow$</div>
-
-計算困難性仮定に矛盾
-
+<div class="hardness-card">
+  <div class="hardness-card-name">LWE / Ring-LWE</div>
+  <div class="hardness-card-desc">
+    多くの<strong>耐量子暗号</strong>が安全性の根拠とする
+  </div>
 </div>
 
-<div class="mt-8 remark" v-click>
-
-識別困難性が成り立つ限り，対象アルゴリズムの挙動はほぼ保存される．
-
+<div class="hardness-card hardness-card--alt">
+  <div class="hardness-card-name">Goldreich PRG</div>
+  <div class="hardness-card-desc">
+    <strong>並列計算可能な</strong>暗号技術の理論基盤
+  </div>
 </div>
 
-<div class="mt-4 text-sm text-gray-500" v-click>
-
-技術的核心：どの精度差・不安定性を効率的な識別器へ変換できるか
-
-</div>
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# 具体的な計算困難性仮定
-
-::content::
-
-<div class="grid grid-cols-2 gap-6 mt-2">
-
-<div class="topic-box" data-callout-title="Ring-LWE 型">
-
-- ノイズ付き環上線形方程式
-- 真のランダム分布との識別困難性
-- 畳み込み・高速変換との接続
-- 多数のベクトルの一括生成候補
-
-</div>
-
-<div class="topic-box" data-callout-title="Goldreich 局所関数型">
-
-- 各出力は少数の seed 成分に依存
-- 短い記述から長い列を生成
-- 局所生成・streaming に適する
-- 低メモリ実装の候補
-
+<div class="hardness-card hardness-card--warm">
+  <div class="hardness-card-name">埋め込みクリーク</div>
+  <div class="hardness-card-desc">
+    高次元統計において最も基本的な計算量仮定
+  </div>
 </div>
 
 </div>
 
-<div class="mt-8 text-2xl font-bold text-center" v-click>
+<br />
 
-「予測できない」構造を用いて，高次元データを効率的に「予測」する
+
+- 既存研究では「**できない**」$\Rightarrow$「**できない**」
+  - 暗号分野: 「LWEが解けない」$\Rightarrow$「公開鍵暗号方式は解読されない」
+  - 統計分野: 「埋め込みクリークが解けない」$\Rightarrow$ 「スパース主成分分析が解けない」
+
+<div class="mt-6 topic-box" data-callout-title="独創性・新規性" v-click>
+
+- 「できない」という仮定を「**できる**」に利用
+- win-win: 実用上のブレイクスルー or 理論上のブレイクスルー
 
 </div>
 
@@ -330,45 +298,31 @@ color: amber-light
 
 ::title::
 
-# 目的
+# 三つの部分課題
 
 ::content::
 
-<div class="mt-6 text-3xl text-center font-bold">
+- 三つの課題を相互作用させつつ進める
 
-どのようなランダム性が，
-<br>
-乱択線形代数に本当に必要か？
+1. 乱択線形代数におけるランダム性の計算量的定式化
+2. Hutchinson 型トレース推定における擬似ランダム性の導入
+3. 乱択線形代数における擬似ランダム性の理論基盤化
 
-</div>
 
-<div class="mt-10 grid grid-cols-3 gap-5 text-center">
 
-<div class="definition" v-click>
+---
+layout: top-title
+color: amber-light
+---
 
-## 精度
+::title::
 
-近似保証を保つ
+# 独創性・新規制
 
-</div>
+::content::
 
-<div class="definition" v-click>
+- 「予測(計算)できない」に基づいて、「効率的に予測する」
 
-## 計算資源
-
-時間・乱数・記憶を削減
-
-</div>
-
-<div class="definition" v-click>
-
-## 一般原理
-
-個別構成を越えた設計指針
-
-</div>
-
-</div>
 
 ---
 layout: top-title
