@@ -30,19 +30,8 @@ themeConfig:
 
 # 計算量的擬似ランダム性に基づく<br>乱択線形代数
 
-<div class="mt-4 text-xl text-gray-600">
-真のランダム性を，計算に十分な擬似ランダム性へ
-</div>
+清水 伸高（東京科学大学）
 
-<div class="grid grid-cols-10 gap-8 place-items-center h-40 mt-8">
-
-<div class="col-span-6">
-
-- 清水 伸高（東京科学大学）
-
-</div>
-
-</div>
 
 ---
 layout: top-title
@@ -106,16 +95,18 @@ color: amber-light
 
 <div class="topic-box">
 
-**ランダムスケッチ**: ランダム行列を掛けてベクトルの次元を下げる
+例. ランダム行列を掛けてベクトルの次元を下げる (**ランダムスケッチ**)
 
 </div>
 
 
 <SketchCompress />
 
-- 圧縮前後で**内積の値は近似的に保たれる**: $\langle Rx,Ry\rangle \approx \langle x,y\rangle$
-- 多くのベクトル $x_1,\dots,x_m$ を圧縮して $Rx_1,\dots,Rx_m$ に対して解析アルゴリズムを適用すればよい
+<div class="topic-box" v-click>
+
+圧縮前後で高確率で**内積の値は近似的に保たれる**: $\langle Rx,Ry\rangle \approx \langle x,y\rangle$
   
+</div>
 
 ---
 layout: top-title
@@ -128,22 +119,31 @@ color: amber-light
 
 ::content::
 
-- 一度の圧縮には $R$ の成分数に比例する時間がかかる
+- 一回の圧縮で $R$ の成分数に比例する時間がかかる
 - ランダム行列の生成・保存にもコスト
-- 反復計算では同じ処理を何度も実行
+- 圧縮を繰り返す状況では同じ処理を何度も実行 (例. 勾配法)
 
-<div class="mt-6 topic-box" data-callout-title="既知の回避策" v-click>
+<div class="mt-6 topic-box known-remedies" data-callout-title="既知の回避策" v-click>
+
+<div class="known-remedies-grid">
+
+<div>
 
 - 高速 Johnson–Lindenstrauss 変換
 - 疎な埋め込み行列
-- Hadamard・Fourier 型の構造化変換
-- Toeplitz・circulant 型ランダム行列
+- Hadamard/Fourier/Toeplitz 型の構造化変換
+
+</div>
+
+<StructuredRandomMatrix />
+
+</div>
 
 </div>
 
 <div class="mt-6 text-lg font-bold text-center" v-click>
 
-しかし，応用ごとに構成と正当性の証明が必要
+しかし，応用ごとにアドホックに構成と正当性の証明が必要
 
 </div>
 
@@ -154,43 +154,98 @@ color: amber-light
 
 ::title::
 
-# 本研究提案
+# 本研究: 計算量的擬似ランダム性に基づく乱択線形代数
 
 ::content::
 
-## 計算量的擬似ランダム性に基づく乱択線形代数
+- **計算量的疑似ランダム性**: 任意の**効率的な**アルゴリズムにとって, 真のランダムと**識別できない**性質
 
-<div class="grid grid-cols-2 gap-8 mt-6">
+<PrgIndistinguish />
 
-<div class="definition text-center">
+<v-click>
 
-### 真のランダム構造
+- 例えば $D$ として内積を計算するアルゴリズムにすれば, ランダムスケッチを模倣できる
+- ランダムスケッチ以外にも汎用的に適用できる
 
-長い乱数列から生成
+</v-click>
 
-<div class="mt-4 text-3xl">$R$</div>
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 基本原理
+
+::content::
+
+- 効率的なアルゴリズムの限界についての議論 -> **計算量下界の仮定が必要**
+
+計算量的仮定 (例えば次世代の暗号の安全性の仮定) -> 疑似ランダム行列/ベクトルを構成 -> 乱択線形代数アルゴリズムに適用
+
+win-winの議論: 疑似ランダム性を使うアルゴリズムが上手く行かない $\Rightarrow$ 元々の計算量的仮定が偽だったことになり, 大きなブレイクスルー (例えば暗号が安全でないことの証明) になる
+
+- 具体的な計算量下界の例:
+  - Learning with Error (LWE), Ring-LWE: ほとんどの耐量子暗号が依存
+  - Goldreich PRG: 並列計算できる暗号技術の理論基盤
+  - 埋め込みクリーク問題: 高次元統計学における計算量と情報理論の乖離の理論の中核
+
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 独創性・新規制
+
+::content::
+
+- 「予測(計算)できない」に基づいて、「効率的に予測する」
+
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 本研究: 計算量的擬似ランダム性に基づく乱択線形代数
+
+::content::
+
+
+<div class="goal">
+
+- 真のランダム性の代わりに**計算量的疑似ランダム性**を用いて乱択線形代数の汎用的な理論を構築
+- 疑似ランダム性の持つ構造的性質を利用して, 乱択線形代数アルゴリズムの効率の改善
 
 </div>
 
-<div class="definition text-center">
+<v-click>
 
-### 擬似ランダム構造
+- メリット
+  - **超**情報理論的な効率性
+    - 例えば, $x\mapsto Rx$ を, $R$の**成分数より少ない手間**で計算できる
+    - 計算量的仮定に依拠
+  - 高い**汎用性**: 既存の改善手法と異なり, アドホックな修正や証明が不要
+    - トレース推定, 低ランク近似, スペクトル推定, 乱択反復法, 線型方程式ソルバー, ...
 
-短い seed から生成
+</v-click>
 
-<div class="mt-4 text-3xl">$G(s)$</div>
 
-</div>
+---
+layout: top-title
+color: amber-light
+---
 
-</div>
+::title::
 
-<div class="mt-8 text-xl text-center" v-click>
+# 独創性・新規性
 
-効率的なアルゴリズムが両者を区別できないなら，
-<br>
-そのアルゴリズムにとって両者は同じように振る舞う
+::content::
 
-</div>
 
 ---
 layout: top-title

@@ -399,6 +399,27 @@ strong {
   font-size: 0.95em;
 }
 
+.goal {
+  border: 2px solid #1565c0;
+  background-color: #e3f2fd;
+  padding: 35px 15px 4px;
+  margin: 10px 0 2px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.goal::before {
+  content: "目標";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #1565c0;
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.8em;
+  border-radius: 6px 0 8px 0;
+}
+
 .conjecture {
   border: 2px solid #ff6b35;
   background-color: #fff8e1;
@@ -515,6 +536,10 @@ strong {
   content: "主張 (" attr(data-callout-title) ")";
 }
 
+.goal[data-callout-title]::before {
+  content: "目標 (" attr(data-callout-title) ")";
+}
+
 .topic-box[data-callout-title] {
   padding: 35px 15px 0;
 }
@@ -529,6 +554,18 @@ strong {
   padding: 2px 8px;
   font-size: 0.8em;
   border-radius: 6px 0 8px 0;
+}
+
+.known-remedies-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  padding-bottom: 0.55rem;
+}
+
+.known-remedies-grid > div > ul {
+  margin: 0.15rem 0 0.35rem;
 }
 
 /* Consensus Dynamics — two-column layout */
