@@ -2,8 +2,15 @@
 import { useSlideContext } from '@slidev/client'
 import { onUnmounted, ref, watch } from 'vue'
 
+const props = withDefaults(defineProps<{
+  /** 計算機上・メモリ下の縦積み（右カラム向け） */
+  stacked?: boolean
+}>(), {
+  stacked: false,
+})
+
 const MEMORY_ROWS = 3
-const MEMORY_COLS = 16
+const MEMORY_COLS = 10
 
 const { $clicks } = useSlideContext()
 
@@ -39,7 +46,7 @@ onUnmounted(stopTimer)
 </script>
 
 <template>
-  <div class="cm" aria-hidden="true">
+  <div class="cm" :class="{ 'is-stacked': stacked }" aria-hidden="true">
     <div class="cm-row">
       <div class="cm-cpu">
         <div class="cm-cpu-box">
@@ -63,7 +70,7 @@ onUnmounted(stopTimer)
         <div class="cm-bus-track">
           <div class="cm-bus-line" />
           <div class="cm-packets" :class="`is-${phase}`">
-            <span v-for="i in 6" :key="i" class="cm-packet" :style="{ '--i': i }" />
+            <span v-for="i in 5" :key="i" class="cm-packet" :style="{ '--i': i }" />
           </div>
         </div>
       </div>
@@ -93,11 +100,25 @@ onUnmounted(stopTimer)
   padding: 0.15rem 0;
 }
 
+.cm.is-stacked {
+  width: 7.6rem;
+  max-width: 100%;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
 .cm-row {
   display: flex;
   align-items: center;
   gap: 0.45rem;
   width: 100%;
+}
+
+.cm.is-stacked .cm-row {
+  flex-direction: column;
+  gap: 0.18rem;
 }
 
 .cm-cpu,
@@ -107,6 +128,13 @@ onUnmounted(stopTimer)
   align-items: center;
   gap: 0.32rem;
   flex-shrink: 0;
+}
+
+.cm.is-stacked .cm-cpu,
+.cm.is-stacked .cm-mem {
+  flex-direction: column;
+  gap: 0.12rem;
+  width: 100%;
 }
 
 .cm-cpu-box,
@@ -127,9 +155,19 @@ onUnmounted(stopTimer)
   flex-shrink: 0;
 }
 
+.cm.is-stacked .cm-cpu-box {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
 .cm-cpu-icon {
   width: 1.45rem;
   height: 1.45rem;
+}
+
+.cm.is-stacked .cm-cpu-icon {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .cm-mem-box {
@@ -138,16 +176,29 @@ onUnmounted(stopTimer)
   padding: 0.22rem 0.28rem;
 }
 
+.cm.is-stacked .cm-mem-box {
+  width: 100%;
+  padding: 0.16rem 0.18rem;
+}
+
 .cm-mem {
   flex: 1 1 auto;
   min-width: 0;
 }
 
+.cm.is-stacked .cm-mem {
+  flex: 0 0 auto;
+}
+
 .cm-mem-grid {
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 0.1rem;
+}
+
+.cm.is-stacked .cm-mem-grid {
+  gap: 0.07rem;
 }
 
 .cm-mem-cell {
@@ -156,6 +207,10 @@ onUnmounted(stopTimer)
   background: #fed7aa;
   border: 1px solid #fdba74;
   transition: background 0.35s ease, opacity 0.35s ease;
+}
+
+.cm.is-stacked .cm-mem-cell {
+  height: 0.32rem;
 }
 
 .cm-mem-cell.is-active {
@@ -182,12 +237,24 @@ onUnmounted(stopTimer)
   white-space: nowrap;
 }
 
+.cm.is-stacked .cm-label {
+  font-size: 0.58rem;
+}
+
 .cm-bus {
   flex: 1.4 1 auto;
   min-width: 4.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.12rem;
+}
+
+.cm.is-stacked .cm-bus {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: 100%;
+  align-items: center;
+  gap: 0.06rem;
 }
 
 .cm-bus-caption {
@@ -200,9 +267,18 @@ onUnmounted(stopTimer)
   line-height: 1;
 }
 
+.cm.is-stacked .cm-bus-caption {
+  font-size: 0.5rem;
+}
+
 .cm-bus-track {
   position: relative;
   height: 0.55rem;
+}
+
+.cm.is-stacked .cm-bus-track {
+  width: 0.55rem;
+  height: 1.35rem;
 }
 
 .cm-bus-line {
@@ -215,6 +291,17 @@ onUnmounted(stopTimer)
   border-radius: 999px;
   background: linear-gradient(90deg, #fdba74, #fb923c, #fdba74);
   opacity: 0.55;
+}
+
+.cm.is-stacked .cm-bus-line {
+  left: 50%;
+  right: auto;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  height: auto;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #fdba74, #fb923c, #fdba74);
 }
 
 .cm-packets {
@@ -232,6 +319,13 @@ onUnmounted(stopTimer)
   opacity: 0;
 }
 
+.cm.is-stacked .cm-packet {
+  left: calc(50% - 0.14rem);
+  top: auto;
+  width: 0.28rem;
+  height: 0.28rem;
+}
+
 .cm-packets.is-read .cm-packet {
   animation: cm-packet-read 1.1s linear infinite;
   animation-delay: calc((var(--i) - 1) * 0.15s);
@@ -240,6 +334,14 @@ onUnmounted(stopTimer)
 .cm-packets.is-write .cm-packet {
   animation: cm-packet-write 1.1s linear infinite;
   animation-delay: calc((var(--i) - 1) * 0.15s);
+}
+
+.cm.is-stacked .cm-packets.is-read .cm-packet {
+  animation-name: cm-packet-read-v;
+}
+
+.cm.is-stacked .cm-packets.is-write .cm-packet {
+  animation-name: cm-packet-write-v;
 }
 
 @keyframes cm-packet-read {
@@ -272,6 +374,40 @@ onUnmounted(stopTimer)
   }
   100% {
     left: 88%;
+    opacity: 0;
+  }
+}
+
+@keyframes cm-packet-read-v {
+  0% {
+    top: 88%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cm-packet-write-v {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    top: 88%;
     opacity: 0;
   }
 }

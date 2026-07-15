@@ -152,12 +152,12 @@ const headStyle = computed(() => ({ top: `${shaftPct.value}%` }))
         >
           <div class="yp-topic-split">
             <div class="yp-topic-copy">
-              <div class="yp-topic-lead">理論計算機科学の主要国際会議(SODA,STOC,FOCS)への多くの採択経験</div>
+              <div class="yp-topic-lead">理論計算機科学の主要国際会議(SODA,STOC,FOCS)への継続的な採択実績</div>
               <ul class="yp-topic-list">
                 <li>平均時計算困難性の増幅とその応用 (SODA21, FOCS22, STOC23, STOC24, STOC26)</li>
                 <li>線形代数的な問題（行列積）に対する誤り訂正 (STOC25, STOC26, FOCS26)</li>
               </ul>
-              <small>日本の理論計算機科学分野の国際的プレゼンスに大きく貢献</small>
+              <small>本研究に関連する分野の深い知見・技術を有している<br>理論計算機科学における日本の国際的プレゼンスに大きく貢献する成果</small>
             </div>
             <div class="yp-topic-person" aria-hidden="true">
               <PrgPerson pose="guts" />
