@@ -70,17 +70,20 @@ color: amber-light
 
 <hr>
 
-<v-click>
+<div v-click="1">
 
 データの通信・保存・計算が全体のボトルネックになる
 
-<div class="topic-box">
+<ComputeMemory />
+
+</div>
+
+<div class="topic-box" v-click="2">
 
 **乱択線形代数**: 大規模な線形代数計算を近似的かつ高速に行う手法
 
 </div>
 
-</v-click>
 
 ---
 layout: top-title
@@ -184,7 +187,7 @@ color: amber-light
 
 <div class="goal">
 
-計算量的擬似ランダム性に基づき, トレース推定を起点とする乱択線形代数の新たな数理基盤を構築する.
+**計算量的擬似ランダム性**に基づき, トレース推定を起点とする**乱択線形代数の新たな数理基盤**を構築する.
 
 
 <div class="footnote">
@@ -279,14 +282,16 @@ color: amber-light
 
 <br />
 
+<div class="theorem" data-callout-title="例" v-click>
 
-- 既存研究では「**できない**」$\Rightarrow$「**できない**」
-  - 暗号分野: 「LWEが解けない」$\Rightarrow$「公開鍵暗号方式は解読されない」
-  - 統計分野: 「埋め込みクリークが解けない」$\Rightarrow$ 「スパース主成分分析が解けない」
+LWEが困難ならば, $x\mapsto \widetilde{R}x$ がベクトルの次元に比例する時間で計算できるような擬似ランダム行列 $\widetilde{R}$ が構成でき, ランダムスケッチによる圧縮に代用できる.
+
+</div>
+
 
 <div class="mt-6 topic-box" data-callout-title="独創性・新規性" v-click>
 
-- 「できない」という仮定を「**できる**」に利用
+- 「**できない**」という仮定を「**できる**」に利用
 - win-win: 実用上のブレイクスルー or 理論上のブレイクスルー
 
 </div>
@@ -302,6 +307,7 @@ color: amber-light
 
 ::content::
 
+<!-- components/YearlyPlan.vue -->
 <YearlyPlan />
 
 ---
@@ -315,6 +321,7 @@ color: amber-light
 
 ::content::
 
+<!-- components/FutureOutlook.vue -->
 <FutureOutlook />
 
 ---
@@ -337,6 +344,17 @@ appendix: true
 ---
 
 # 付録
+
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 選んだ予想(LWE, Goldreich PRG, 埋め込みクリーク)の理由
+
+::content::
 
 
 

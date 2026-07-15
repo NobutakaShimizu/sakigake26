@@ -6,19 +6,30 @@ const { $clicks } = useSlideContext()
 
 const branches = [
   {
-    title: '応用への展開',
-    detail:
-      'Hutchinson 推定で得た数理基盤を, ベクトル量子化, 近似最近傍探索などへと広げていく.',
+    title: '理論的なアルゴリズム設計の新たなパラダイム',
+    detail: '「できない」を「できる」に転用',
+    bullets: [
+      '組合せ最適化',
+      'グラフアルゴリズム',
+      '対話証明系',
+    ],
+    icon: 'book' as const,
   },
   {
-    title: '次世代基盤の構築',
-    detail:
-      '古典的な線形代数に計算量的擬似ランダム性を導入し, 予測・制御計算を支えるランダム化手法の次世代基盤を築く.',
+    title: '実用的なアルゴリズムの改善',
+    detail: '「擬似」乱択線形代数が用いられるアルゴリズムへの実装.',
+    bullets: [
+      '量子化によるLLM学習や推論のKVキャッシュの改善',
+      '乱択特異値分解効率化 (実装例: Pythonライブラリのscikit-learnなど)',
+      'トレース推定の効率化 (実装例: PyTorchのCurvlinopsライブラリなど)',
+    ],
+    icon: 'tools' as const,
   },
   {
     title: '国際的な研究潮流へ',
     detail:
       '理論計算機科学, 乱択線形代数, 数値線形代数の研究者との国際共同研究を通じて発展させる.',
+    icon: 'rocket' as const,
   },
 ] as const
 
@@ -142,8 +153,125 @@ const branchOn = (i: number) => shown.value > i
           class="fo-card"
           :class="{ 'is-on': branchOn(i) }"
         >
-          <div class="fo-card-title">{{ item.title }}</div>
-          <div class="fo-card-detail">{{ item.detail }}</div>
+          <div class="fo-card-title">
+            <svg
+              v-if="item.icon === 'book'"
+              class="fo-title-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 5.2 C5 5.2 9 3.8 12 5.8 C15 3.8 19 5.2 19 5.2 V17.2 C19 17.2 15 15.8 12 17.8 C9 15.8 5 17.2 5 17.2 Z"
+                fill="#fff7ed"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 5.8 V17.8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M8.2 8.2 H10.8 M13.2 8.2 H15.8 M8.2 11 H10.8 M13.2 11 H15.8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.1"
+                stroke-linecap="round"
+                opacity="0.55"
+              />
+            </svg>
+            <svg
+              v-else-if="item.icon === 'tools'"
+              class="fo-title-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <rect
+                x="2"
+                y="9"
+                width="3"
+                height="2.5"
+                rx="0.5"
+                fill="#fff7ed"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M5 8 H16 C17.5 8 18 9 18 10.5 V11.5 C18 13 17.5 14 16 14 H8 C6.5 14 5.5 13 5.5 11.5 V10"
+                fill="#fff7ed"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M18 9.5 H21.5 L22 10.5 L21.5 11.5 H18"
+                fill="#fff7ed"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8 14 V20 C8 21 9 21.5 10 21.5 H11.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 14 L8.5 17"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+              />
+              <path
+                d="M22 10.5 C23 12.5 22.5 14 21.5 15"
+                fill="none"
+                stroke="#fb923c"
+                stroke-width="1.3"
+                stroke-linecap="round"
+              />
+              <circle cx="21.5" cy="15.2" r="0.8" fill="#fb923c" />
+            </svg>
+            <svg
+              v-else-if="item.icon === 'rocket'"
+              class="fo-title-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 2.5 C12 2.5 8.2 8.2 8.2 13.8 V17.5 H15.8 V13.8 C15.8 8.2 12 2.5 12 2.5 Z"
+                fill="#fff7ed"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <circle cx="12" cy="10.8" r="1.8" fill="currentColor" opacity="0.35" />
+              <path
+                d="M8.2 16.2 L5.5 20.5 H9.2 Z M15.8 16.2 L18.5 20.5 H14.8 Z"
+                fill="currentColor"
+                opacity="0.85"
+              />
+              <path
+                d="M10.2 17.5 H13.8 L12 21.5 Z"
+                fill="#fb923c"
+                stroke="#ea580c"
+                stroke-width="0.8"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>{{ item.title }}</span>
+          </div>
+          <div class="fo-card-body">
+            <div class="fo-card-detail">{{ item.detail }}</div>
+            <ul v-if="'bullets' in item && item.bullets" class="fo-card-bullets">
+              <li v-for="(line, j) in item.bullets" :key="j">{{ line }}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -256,6 +384,9 @@ const branchOn = (i: number) => shown.value > i
 }
 
 .fo-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   font-weight: 800;
   font-size: 1.08rem;
   color: #c2410c;
@@ -263,10 +394,31 @@ const branchOn = (i: number) => shown.value > i
   margin-bottom: 0.22rem;
 }
 
+.fo-title-icon {
+  width: 1.45rem;
+  height: 1.45rem;
+  flex-shrink: 0;
+  color: #c2410c;
+}
+
 .fo-card-detail {
   font-size: 0.88rem;
   line-height: 1.45;
   color: #4b5563;
   font-weight: 400;
+}
+
+.fo-card-bullets {
+  margin: 0.2rem 0 0;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+.fo-card-bullets li {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: #4b5563;
+  font-weight: 400;
+  margin: 0.08rem 0;
 }
 </style>

@@ -8,7 +8,7 @@
 }
 
 .theorem::before {
-  content: "Theorem";
+  content: "定理";
   position: absolute;
   top: 0;
   left: 0;
@@ -464,7 +464,7 @@ strong {
 
 /* Optional subtitle ribbons: <div class="lemma" data-callout-title="..."> */
 .theorem[data-callout-title]::before {
-  content: "Theorem (" attr(data-callout-title) ")";
+  content: "定理 (" attr(data-callout-title) ")";
 }
 
 .lemma[data-callout-title]::before {

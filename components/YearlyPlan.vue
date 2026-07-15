@@ -150,11 +150,19 @@ const headStyle = computed(() => ({ top: `${shaftPct.value}%` }))
           class="topic-box yp-topic"
           data-callout-title="本研究における申請者の国際的優位性"
         >
-          <div class="yp-topic-lead">理論計算機科学の主要国際会議(SODA,STOC,FOCS)への多くの採択経験</div>
-          <ul class="yp-topic-list">
-            <li>計算困難性の理論研究 (SODA21, FOCS22, STOC23, STOC24, STOC26)</li>
-            <li>線形代数的な問題の研究 (STOC25, STOC26, FOCS26)</li>
-          </ul>
+          <div class="yp-topic-split">
+            <div class="yp-topic-copy">
+              <div class="yp-topic-lead">理論計算機科学の主要国際会議(SODA,STOC,FOCS)への多くの採択経験</div>
+              <ul class="yp-topic-list">
+                <li>平均時計算困難性の増幅とその応用 (SODA21, FOCS22, STOC23, STOC24, STOC26)</li>
+                <li>線形代数的な問題（行列積）に対する誤り訂正 (STOC25, STOC26, FOCS26)</li>
+              </ul>
+              <small>日本の理論計算機科学分野の国際的プレゼンスに大きく貢献</small>
+            </div>
+            <div class="yp-topic-person" aria-hidden="true">
+              <PrgPerson pose="guts" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -369,6 +377,30 @@ const headStyle = computed(() => ({ top: `${shaftPct.value}%` }))
   flex: 1 1 auto;
   min-width: 0;
   margin: 0 !important;
+}
+
+.yp-topic-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.yp-topic-copy {
+  min-width: 0;
+}
+
+.yp-topic-person {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0.1rem 0.15rem 0 0;
+}
+
+.yp-topic-person :deep(.prg-person-svg) {
+  width: 4.2rem;
+  height: 5.8rem;
 }
 
 .yp-topic-lead {

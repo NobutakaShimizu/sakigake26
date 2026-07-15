@@ -353,67 +353,7 @@ onUnmounted(() => {
 
           <div class="prg-person-wrap">
             <div class="prg-person">
-              <svg
-                class="prg-person-svg"
-                viewBox="0 0 64 88"
-                aria-hidden="true"
-              >
-                <!-- 視線（左の y, ỹ を見る） -->
-                <path
-                  class="prg-gaze"
-                  d="M18 28 C8 24, 2 20, 0 16"
-                  fill="none"
-                  stroke-width="1.4"
-                  stroke-dasharray="2 2"
-                />
-                <path
-                  class="prg-gaze"
-                  d="M18 32 C8 34, 2 38, 0 42"
-                  fill="none"
-                  stroke-width="1.4"
-                  stroke-dasharray="2 2"
-                />
-                <!-- 頭 -->
-                <circle cx="34" cy="22" r="14" class="prg-skin" />
-                <!-- 髪 -->
-                <path
-                  d="M20 20 C22 8, 46 8, 48 20 C42 14, 26 14, 20 20 Z"
-                  class="prg-hair"
-                />
-                <!-- 目（左向き） -->
-                <ellipse cx="27" cy="22" rx="2.2" ry="2.6" class="prg-eye" />
-                <ellipse cx="36" cy="22" rx="2.2" ry="2.6" class="prg-eye" />
-                <circle cx="26.2" cy="22.2" r="0.9" class="prg-pupil" />
-                <circle cx="35.2" cy="22.2" r="0.9" class="prg-pupil" />
-                <!-- 口（困り気味） -->
-                <path
-                  d="M28 30 Q34 27 40 30"
-                  fill="none"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  class="prg-mouth"
-                />
-                <!-- 体 -->
-                <path
-                  d="M22 40 C22 38, 46 38, 46 40 L50 70 C50 76, 18 76, 18 70 Z"
-                  class="prg-body"
-                />
-                <!-- 腕（考える／見るポーズ） -->
-                <path
-                  d="M22 46 C12 48, 8 40, 14 36"
-                  fill="none"
-                  stroke-width="3.2"
-                  stroke-linecap="round"
-                  class="prg-arm"
-                />
-                <path
-                  d="M46 46 C54 50, 56 58, 52 62"
-                  fill="none"
-                  stroke-width="3.2"
-                  stroke-linecap="round"
-                  class="prg-arm"
-                />
-              </svg>
+              <PrgPerson pose="observer" />
               <span class="prg-person-label">
                 効率的アルゴリズム <Math tex="D" />
               </span>
@@ -711,51 +651,6 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.15rem;
   flex-shrink: 0;
-}
-
-.prg-person-svg {
-  width: 3.4rem;
-  height: 4.7rem;
-  overflow: visible;
-}
-
-.prg-skin {
-  fill: #ffe0b2;
-  stroke: #f57c00;
-  stroke-width: 1.4;
-}
-
-.prg-hair {
-  fill: #5d4037;
-}
-
-.prg-eye {
-  fill: #fff;
-  stroke: #37474f;
-  stroke-width: 0.8;
-}
-
-.prg-pupil {
-  fill: #263238;
-}
-
-.prg-mouth {
-  stroke: #e65100;
-}
-
-.prg-body {
-  fill: #fff3e0;
-  stroke: #ef6c00;
-  stroke-width: 1.6;
-}
-
-.prg-arm {
-  stroke: #ffe0b2;
-}
-
-.prg-gaze {
-  stroke: #90a4ae;
-  opacity: 0.85;
 }
 
 .prg-person-label {
