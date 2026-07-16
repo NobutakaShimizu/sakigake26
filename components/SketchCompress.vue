@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext } from '@slidev/client'
 import { computed, onUnmounted, ref, watch } from 'vue'
 
 const M = 6
@@ -31,6 +31,7 @@ for (let k = 0; k < cellOrder.length; k++)
   orderPos[cellOrder[k]!] = k
 
 const { $clicks } = useSlideContext()
+const { isPrintMode } = useNav()
 
 /** 何個目まで R を表示したか（セル個別 boolean は持たない） */
 const rReveal = ref(0)
@@ -128,7 +129,24 @@ async function animateRxCompression(token: number) {
     rxBoxed.value = true
 }
 
+function applyPrintFinalState() {
+  loopToken += 1
+  started = true
+  rReveal.value = M * N
+  rLabelVisible.value = true
+  scanRow.value = -1
+  scanCol.value = -1
+  rxReveal.value = M
+  equalsVisible.value = true
+  rxBoxed.value = true
+}
+
 async function runAnimationOnce() {
+  if (isPrintMode.value) {
+    applyPrintFinalState()
+    return
+  }
+
   const token = ++loopToken
 
   equalsVisible.value = false
@@ -146,9 +164,13 @@ async function runAnimationOnce() {
 }
 
 watch(
-  $clicks,
-  (current) => {
-    if (current < 1) {
+  [$clicks, isPrintMode],
+  ([current]) => {
+    if (isPrintMode.value) {
+      applyPrintFinalState()
+      return
+    }
+    if ((current ?? 0) < 1) {
       resetAll()
       return
     }

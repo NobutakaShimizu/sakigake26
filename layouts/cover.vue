@@ -1,6 +1,5 @@
 <script setup lang="js">
 import { computed } from 'vue'
-import SlideParticleBackground from '../components/SlideParticleBackground.vue'
 
 const props = defineProps({
   color: {
@@ -14,8 +13,7 @@ const colorscheme = computed(() => {
 </script>
 
 <template>
-  <div class="slidev-layout cover h-full slidecolor slide-with-particles" :class="colorscheme">
-    <SlideParticleBackground :density="0.7" animate-colors />
+  <div class="slidev-layout cover h-full slidecolor" :class="colorscheme">
     <div class="slide-particles-content myauto w-full">
       <slot />
     </div>
@@ -91,5 +89,10 @@ const colorscheme = computed(() => {
 .slidev-layout.cover h3 {
   padding-bottom: 0.3em;
   border-bottom: 1px solid var(--neversink-highlight-color);
+}
+
+.slidev-layout.cover .slide-particles-content {
+  position: relative;
+  z-index: 1;
 }
 </style>

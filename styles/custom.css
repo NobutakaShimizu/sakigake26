@@ -1404,6 +1404,26 @@ strong {
   background-color: transparent;
 }
 
+/* タイトルページ（cover）全体の静的背景 */
+.slidev-page:has(.slidev-layout.cover) {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(251, 191, 36, 0.14), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(245, 158, 11, 0.1), transparent 38%),
+    linear-gradient(155deg, #fffdf8 0%, #fff7ed 48%, #fef3e2 100%) !important;
+}
+
+.slidev-page:has(.slidev-layout.cover)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(245, 158, 11, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.055) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
 .slidev-layout.section.slidecolor :is(h1, h2, h3) {
   color: #111;
   font-weight: 700;

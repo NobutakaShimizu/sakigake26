@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext } from '@slidev/client'
 import { onUnmounted, ref, watch } from 'vue'
 
 const ROWS = 5
@@ -51,6 +51,7 @@ const outAlphas = Float32Array.from(
 )
 
 const { $clicks } = useSlideContext()
+const { isPrintMode } = useNav()
 
 const trueReveal = ref(0)
 const prReveal = ref(0)
@@ -90,7 +91,30 @@ function resetAll() {
   indistinct.value = false
 }
 
+function applyPrintFinalState(includePerson: boolean) {
+  token += 1
+  pipelineStarted = true
+  const n = ROWS * COLS
+  trueReveal.value = n
+  prReveal.value = n
+  showArrowIn.value = true
+  showAlgo.value = true
+  algoPulse.value = true
+  showArrowOut.value = true
+  outReveal.value = OUT
+  if (includePerson) {
+    personStarted = true
+    showPerson.value = true
+    indistinct.value = true
+  }
+}
+
 async function runPipelineOnce() {
+  if (isPrintMode.value) {
+    applyPrintFinalState(($clicks.value ?? 0) >= 2)
+    return
+  }
+
   const t = ++token
   trueReveal.value = 0
   prReveal.value = 0
@@ -174,9 +198,14 @@ function isPrVisible(idx: number) {
 }
 
 watch(
-  $clicks,
-  (current) => {
-    if (current < 1) {
+  [$clicks, isPrintMode],
+  ([current]) => {
+    if (isPrintMode.value) {
+      applyPrintFinalState((current ?? 0) >= 2)
+      return
+    }
+
+    if ((current ?? 0) < 1) {
       resetAll()
       return
     }
@@ -188,7 +217,7 @@ watch(
     }
 
     // click 2: 人間 + 吹き出し
-    if (current >= 2) {
+    if ((current ?? 0) >= 2) {
       if (!personStarted) {
         personStarted = true
         revealPerson()

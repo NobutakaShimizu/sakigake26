@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext } from '@slidev/client'
 import { computed, onUnmounted, ref, watch } from 'vue'
 
 const { $clicks } = useSlideContext()
+const { isPrintMode } = useNav()
 
 const items = [
   {
@@ -50,6 +51,12 @@ function delay(ms: number, t: number) {
 }
 
 async function goTo(target: number) {
+  if (isPrintMode.value) {
+    token += 1
+    shown.value = Math.max(0, Math.min(4, target))
+    return
+  }
+
   const t = ++token
   const next = Math.max(0, Math.min(4, target))
   if (next === shown.value)
@@ -76,8 +83,13 @@ async function goTo(target: number) {
 }
 
 watch(
-  $clicks,
-  (current) => {
+  [$clicks, isPrintMode],
+  ([current]) => {
+    if (isPrintMode.value) {
+      token += 1
+      shown.value = 4
+      return
+    }
     const target = Math.min(4, Math.max(1, (current ?? 0) + 1))
     goTo(target)
   },

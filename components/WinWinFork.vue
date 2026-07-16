@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext } from '@slidev/client'
 import { onUnmounted, ref, watch } from 'vue'
 
 const { $clicks } = useSlideContext()
+const { isPrintMode } = useNav()
 
 const props = withDefaults(defineProps<{ clickAt?: number }>(), {
   clickAt: 1,
@@ -22,6 +23,12 @@ function delay(ms: number, t: number) {
 }
 
 async function run() {
+  if (isPrintMode.value) {
+    token += 1
+    phase.value = 3
+    return
+  }
+
   const t = ++token
   phase.value = 1
   await delay(400, t)
@@ -41,9 +48,15 @@ function reset() {
 }
 
 watch(
-  $clicks,
-  (current) => {
-    if (current < props.clickAt) {
+  [$clicks, isPrintMode],
+  ([current]) => {
+    if (isPrintMode.value && (current ?? 0) >= props.clickAt) {
+      token += 1
+      started = true
+      phase.value = 3
+      return
+    }
+    if ((current ?? 0) < props.clickAt) {
       reset()
       return
     }
