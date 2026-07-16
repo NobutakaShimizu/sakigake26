@@ -122,6 +122,7 @@ color: amber-light
 - 高速 Johnson–Lindenstrauss 変換
 - 疎な埋め込み行列
 - Hadamard/Fourier/Toeplitz 型の構造化変換
+- トラップドア行列 (有限体上)
 
 </div>
 
@@ -148,7 +149,7 @@ color: amber-light
 
 ::content::
 
-- **計算量的疑似ランダム性**: 任意の**効率的な**アルゴリズムにとって, 真のランダムと**識別できない**性質
+- **計算量的疑似ランダム性**: 任意の「効率的なアルゴリズム」にとって, 真のランダムと**識別できない**性質
 
 <PrgIndistinguish />
 
@@ -156,7 +157,8 @@ color: amber-light
 
 - 例: $D$ として圧縮前後の内積を比較するアルゴリズム
   - 区別できないならば, ランダムスケッチを模倣
-- ランダムスケッチ以外にも**汎用的に**適用できる
+- 「効率的なアルゴリズム」の定義: 多項式時間アルゴリズム, 低次数アルゴリズム, etc
+  - 応用に応じて様々な定義を考える
 
 </v-click>
 
@@ -309,17 +311,4 @@ color: amber-light
 
 <!-- components/FutureOutlook.vue -->
 <FutureOutlook />
-
----
-layout: top-title
-color: amber-light
----
-
-::title::
-
-# まとめ
-
-::content::
-
-
 
