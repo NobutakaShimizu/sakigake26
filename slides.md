@@ -316,3 +316,24 @@ color: amber-light
 <!-- components/FutureOutlook.vue -->
 <FutureOutlook />
 
+---
+layout: section
+color: amber-light
+---
+
+# 付録
+
+---
+layout: top-title
+color: amber-light
+---
+
+::title::
+
+# 研究費の使用計画
+
+::content::
+
+<!-- components/BudgetPlan.vue -->
+<BudgetPlan />
+
