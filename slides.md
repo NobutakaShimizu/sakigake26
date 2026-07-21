@@ -319,6 +319,7 @@ color: amber-light
 ---
 layout: section
 color: amber-light
+appendix: true
 ---
 
 # 付録
@@ -326,6 +327,7 @@ color: amber-light
 ---
 layout: top-title
 color: amber-light
+appendix: true
 ---
 
 ::title::

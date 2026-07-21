@@ -14,14 +14,18 @@ const props = defineProps({
 
 const { $page, $frontmatter } = useSlideContext()
 
-/** 付録 (appendix: true) より前のスライド数を合計とする */
+/** 付録 (appendix: true) より前のスライド数を合計とする（例: 11ページ目以降が付録なら 10） */
 const mainTotal = computed(() => {
   const list = slides.value
   const idx = list.findIndex(s => s.meta?.slide?.frontmatter?.appendix)
   return idx === -1 ? list.length : idx
 })
 
-const isAppendix = computed(() => !!$frontmatter.appendix)
+const isAppendix = computed(() => {
+  if ($frontmatter.appendix)
+    return true
+  return $page.value > mainTotal.value
+})
 
 const pageLabel = computed(() => {
   if (isAppendix.value)
